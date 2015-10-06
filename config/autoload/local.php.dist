@@ -12,4 +12,11 @@
  */
 
 return array(
+    'db' => array(
+        'driver' => 'Mysqli', 
+        'host' => 'localhost', 
+        'database' => 'my_module', 
+        'username' => 'my-module-user', 
+        'password' => 'my-module-password'
+    ),
 );

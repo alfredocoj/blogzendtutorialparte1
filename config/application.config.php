@@ -7,8 +7,13 @@
  */
 return array(
     'modules' => array(
+        'DoctrineModule',
+        'DoctrineORMModule',
         'Application',
         'Admin',
+        'HelloWorld',
+        'BlogParte1',
+        'Core'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
