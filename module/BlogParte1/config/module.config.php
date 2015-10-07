@@ -7,9 +7,9 @@
          ),
      ),
 
-      'controllers' => array(
+     'controllers' => array(
          'invokables' => array(
-             'BlogParte1\Controller\List' => 'BlogParte1\Controller\ListController'
+             'BlogParte1\Controller\Posts' => 'BlogParte1\Controller\PostsController'
          )
      ),
 
@@ -27,7 +27,7 @@
                      'route'    => '/blogparte1',
                      // Define default controller and action to be called when this route is matched
                      'defaults' => array(
-                         'controller' => 'BlogParte1\Controller\List',
+                         'controller' => 'BlogParte1\Controller\Posts',
                          'action'     => 'index',
                      )
                  )
