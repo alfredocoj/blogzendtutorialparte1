@@ -17,7 +17,7 @@ class BaseController extends AbstractActionController
 
         return $this->entityManager;
     }
-    protected function getDbalConnection()
+    /*protected function getDbalConnection()
     {
         $config = new \Doctrine\DBAL\Configuration;
 
@@ -25,7 +25,7 @@ class BaseController extends AbstractActionController
         $params = $params['doctrine']['connection']['orm_default']['params'];
 
         return DriverManager::getConnection($params, $config);
-    }
+    }*/
     protected function getService($service)
     {
         return $this->getServiceLocator()->get($service);
