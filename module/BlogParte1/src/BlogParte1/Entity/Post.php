@@ -4,7 +4,7 @@ namespace BlogParte1\Entity;
 use Doctrine\ORM\Mapping as ORM; //Classe necessária para as anotações do Doctrine.
 
 /**
- * @ORM\Entity(repositoryClass="Admin\Entity\Post")
+ * @ORM\Entity(repositoryClass="BlogParte1\Entity\Post")
  * @ORM\Entity
  * @ORM\Table(name="posts")
 */
@@ -68,31 +68,6 @@ class Post
         return $this->commentsPost;
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    public function getPostDate()
-    {
-        return $this->postDate;
-    }
-
-    public function getCommentsPost()
-    {
-        return $this->commentsPost;
-    }
-
     // métodos Setters
 
     public function setId($id)
@@ -118,6 +93,30 @@ class Post
     public function setCommentsPost($commentsPost)
     {
         $this->commentsPost = $commentsPost;
+    }
+
+    /**
+     * Carregando os valores passados pelo usuário no objeto a ser salvo no banco.
+     *
+     * @param  mixed $data Os dados recebidos do usuário.
+     * @return void
+     */
+    public function exchangeArray( array $values )
+    {
+
+       foreach( $this as $key => $value )
+            if( isset( $values[$key] ) )
+                $this->$key = $values[ $key ];
+    }
+
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
     }
 
 }
