@@ -6,6 +6,7 @@ class Constantes
     const MODEL_USUARIO             = 'Admin\Model\UsuarioModel';
     const MODEL_PERMISSAO           = 'Admin\Model\PermissaoModel';
     const MODEL_POST                = 'Admin\Model\PostModel';
+    const MODEL_POSTS               = 'BlogParte1\Model\PostModel';
     const MODEL_COMMENT             = 'Admin\Model\CommentModel';
     const MODEL_PERFIL              = 'Admin\Model\PerfilModel';
     const MODEL_RECURSO             = 'Admin\Model\RecursoModel';
