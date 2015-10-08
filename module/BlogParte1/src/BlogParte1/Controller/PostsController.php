@@ -35,7 +35,9 @@ class PostsController extends ActionController
                 $post = new Post();
                 $post->exchangeArray($form->getData());
 
-                $this->getService(Constantes::MODEL_POSTS)->save($post);
+                $repository = $this->getEntityManager();
+                $repository->persist($post);
+                $repository->flush();
 
                 return $this->redirect()->toUrl('/blogparte1/posts/index');
             }
