@@ -27,4 +27,57 @@ return array(
             )
         ),
     ),
+    'db' => array(
+       'driver'         => 'Pdo',
+       'dsn'            => 'mysql:dbname=zf2blog;host=localhost',
+       'driver_options' => array(
+        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+        ),
+        'username' => 'root',
+        'password' => '1234',
+    ),
+    'acl' => array(
+        'roles' => array(
+            'visitante'   => null,
+            'redator'  => 'visitante',
+            'admin' => 'redator'
+        ),
+        'resources' => array(
+            'Application\Controller\Index.index',
+            'Admin\Controller\Auth.index',
+            'Admin\Controller\Auth.login',
+            'Admin\Controller\Auth.logout',
+            'Admin\Controller\Posts.save',
+            'Admin\Controller\Posts.delete',
+            'BlogParte1\Controller\Posts.index',
+            'BlogParte1\Controller\Posts.create',
+            'BlogParte1\Controller\Posts.update',
+            'BlogParte1\Controller\Posts.delete',
+        ),
+        'privilege' => array(
+            'visitante' => array(
+                'allow' => array(
+                    'Application\Controller\Index.index',
+                    'Admin\Controller\Auth.index',
+                    'Admin\Controller\Auth.login',
+                    'Admin\Controller\Auth.logout',
+                    'BlogParte1\Controller\Posts.index',
+                    'BlogParte1\Controller\Posts.create',
+                    'BlogParte1\Controller\Posts.update',
+                    'BlogParte1\Controller\Posts.delete',
+                )
+            ),
+            'redator' => array(
+                'allow' => array(
+                    'Admin\Controller\Posts.save',
+                )
+            ),
+            'admin' => array(
+                'allow' => array(
+                    'Admin\Controller\Posts.save',
+                    'Admin\Controller\Posts.delete',
+                )
+            ),
+        )
+    )
 );
