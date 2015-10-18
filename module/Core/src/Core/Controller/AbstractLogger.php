@@ -4,10 +4,10 @@
  *
  */
 namespace Core\Controller;
-
+ 
 use Zend\Log\Writer\Stream;
 use Zend\Log\Logger;
-
+ 
 /**
  * Classe abstrata para Logs
  *
@@ -22,14 +22,14 @@ abstract class AbstractLogger extends Logger
      * @var string
      */
     private $_logDir;
-
+ 
     /**
      * Nome do arquivo de log
      *
      * @var string
      */
     private $_logFile;
-
+ 
     /**
      * Construtor
      *
@@ -42,17 +42,17 @@ abstract class AbstractLogger extends Logger
     public function __construct($logFile, $logDir = null)
     {
         parent::__construct();
-
+ 
         if (null == $logDir) {
             $logDir = sys_get_temp_dir();
         }
         $this->setLogDir($logDir);
         $this->setLogFile($logFile);
-
+ 
         $writer = new Stream($logDir . DIRECTORY_SEPARATOR . $logFile);
         $this->addWriter($writer);
     }
-
+ 
     /**
      * Retorna o logDir
      *
@@ -62,7 +62,7 @@ abstract class AbstractLogger extends Logger
     {
         return $this->_logDir;
     }
-
+ 
     /**
      * Define o logDir
      *
@@ -75,7 +75,7 @@ abstract class AbstractLogger extends Logger
         if (!file_exists($logDir) || !is_writable($logDir)) {
             throw new \InvalidArgumentException("Diretório inválido!");
         }
-
+ 
         $this->_logDir = $logDir;
     }
     /**
@@ -85,7 +85,7 @@ abstract class AbstractLogger extends Logger
     {
         return $this->_logFile;
     }
-
+ 
     /**
      * @param string $_logFile
      */

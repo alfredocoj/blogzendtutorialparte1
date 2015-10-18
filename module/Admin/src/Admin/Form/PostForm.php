@@ -17,7 +17,7 @@ class PostForm extends Form
 
 		$this->setAttribute('method', 'post');
         $this->setAttribute('class','form-horizontal');
-        $this->setAttribute('action', '/admin/posts/create');
+        $this->setAttribute('action', '/admin/posts/save');
 
         $this->addElements();
        	$this->addInputFilter();
@@ -83,7 +83,7 @@ class PostForm extends Form
         $id          = new Element\Hidden('id');
         $title       = new Element\Text('title');
         $description = new Element\Textarea('description');
-        $postDate    = new Element\Hidden('postDate');
+        $postDate    = new Element\Hidden('post_date');
         $submit      = new Element\Submit('submit');
 
         $title->setName('title')

@@ -1,22 +1,65 @@
 <?php
-
 namespace Admin\Controller;
-use Core\Controller\CRUDController;
-use Core\Util\MenuBarButton;
-use Core\Util\Constantes;
-use Admin\Form\PostForm;
-use Admin\Entity\Post;
-use Zend\View\Model\ViewModel;
 
-class PostsController extends CRUDController
+use Zend\View\Model\ViewModel;
+use Core\Controller\ActionController;
+use Application\Entity\Post;
+use Admin\Form\PostForm as PostForm;
+
+/**
+ * Controlador que gerencia os posts
+ * 
+ * @category Admin
+ * @package Controller
+ */
+class PostsController extends ActionController
 {
-	public function __construct()
-	{
-		$form       = new PostForm();
-		$entity     = new Post();
-		$model      = Constantes::MODEL_POST;
-		$actionBase = '/admin/posts';
-		$label      = 'Posts';
-		parent::__construct($entity, $model, $form, $actionBase, $label);
-	}
+    /**
+     * Cria ou edita um post
+     * @return void
+     */
+    public function saveAction()
+    {
+        $form = new PostForm();
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = new Post;
+            //$form->setInputFilter($post->getInputFilter());
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                $data = $form->getData();
+                unset($data['submit']);
+                $data['post_date'] = date('Y-m-d H:i:s');
+                $post->setData($data);
+                
+                $saved =  $this->getTable('Application\Entity\Post')->save($post);
+                return $this->redirect()->toUrl('/');
+            }
+        }
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if ($id > 0) {
+            $post = $this->getTable('Application\Entity\Post')->get($id);
+            $form->bind($post);
+            $form->get('submit')->setAttribute('value', 'Edit');
+        }
+        return new ViewModel(
+            array('form' => $form)
+        );
+    }
+     
+    /**
+     * Exclui um post
+     * @return void
+     */
+    public function deleteAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if ($id == 0) {
+            throw new \Exception("Código obrigatório");
+        }
+        
+        $this->getTable('Application\Entity\Post')->delete($id);
+        return $this->redirect()->toUrl('/');
+    }
+
 }

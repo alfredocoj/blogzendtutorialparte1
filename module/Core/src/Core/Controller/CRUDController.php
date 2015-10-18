@@ -4,13 +4,12 @@ namespace Core\Controller;
 
 use Core\Controller\BaseController;
 use Zend\View\Model\ViewModel;
-use Doctrine\DBAL\DBALException;
 
 use Core\Util\MenuBarButton;
 
 class CRUDController extends BaseController
 {
-
+    
     protected $menuBar = array();
 
     protected $entity;
@@ -37,31 +36,33 @@ class CRUDController extends BaseController
 
     public function indexAction() {
         $resultSet = $this->getModel()->findAll();
-
+        
         $novo = new MenuBarButton();
         $novo->setName('Novo')
              ->setAction($this->actionBase . '/create')
-             ->setIcon('glyphicon glyphicon-plus-sign')
-             ->setStyle('btn btn-success');
+             ->setIcon('fa fa-plus')
+             ->setStyle('btn-success');
 
         array_push($this->menuBar, $novo);
 
         return new ViewModel(
             array(
                 'menuButtons' => $this->menuBar,
-                'resultSet'   => $resultSet
+                'resultSet' => $resultSet
             )
         );
     }
-
+    
     public function createAction() {
         $form = $this->form;
-
+     
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
+        if ($request->isPost())
+        {
             $dataObject = $this->entity;
-
+            
+            $form->setInputFilter($dataObject->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid())
@@ -87,16 +88,18 @@ class CRUDController extends BaseController
 
         $form = $this->form;
         $form->setAttribute('action', $this->actionBase . '/update');
-
+        
         // try get method
-        if ( $id ) {
+        if ( $id )
+        {
             $myRepository = $this->getModel()->getById($id);
-
+             
             if (!$myRepository)
             {
-                $this->flashMessenger()->setNamespace('danger')->addMessage($this->label . ' não existe!');
+                $this->flashMessenger()->setNamespace('error')->addMessage($this->label . ' não existe!');
                 return $this->redirect()->toUrl($this->actionBase);
-            } else {
+            } else
+            {
                 $form->setData($myRepository->getArrayCopy());
             }
         }
@@ -104,8 +107,9 @@ class CRUDController extends BaseController
         else if ($request->isPost()) {
             $dataObject = $this->entity;
 
+            $form->setInputFilter($dataObject->getInputFilter());
             $form->setData($request->getPost());
-
+            
             if ($form->isValid())
             {
                 $dataObject->exchangeArray($form->getData());
@@ -117,7 +121,7 @@ class CRUDController extends BaseController
             }
         }
         else {
-            $this->flashMessenger()->setNamespace('danger')->addMessage('Acesso ilegal!');
+            $this->flashMessenger()->setNamespace('error')->addMessage('Acesso ilegal!');
             return $this->redirect()->toUrl($this->actionBase);
         }
 
@@ -125,21 +129,20 @@ class CRUDController extends BaseController
             'form' => $form
         ));
     }
-
+    
     public function deleteAction() {
         $id = (int) $this->params()->fromRoute('id');
-
+        
         // try get method
-        if ( $id ) {
-            if ( $this->getModel()->delete($id) ) {
-                $this->flashMessenger()->setNamespace('success')->addMessage($this->label . ' excluído com sucesso!');
-                return $this->redirect()->toUrl($this->actionBase);
-            } else {
-                $this->flashMessenger()->setNamespace('danger')->addMessage('Exclusão não realizada.');
-                return $this->redirect()->toUrl($this->actionBase);
-            }
+        if ( $id )
+        {
+            $this->getModel()->delete($id);
+
+            $this->flashMessenger()->setNamespace('success')->addMessage($this->label . ' excluído com sucesso!');
+            
+            return $this->redirect()->toUrl($this->actionBase);
         }
-        $this->flashMessenger()->setNamespace('danger')->addMessage('Acesso ilegal!');
+        $this->flashMessenger()->setNamespace('error')->addMessage('Acesso ilegal!');
         return $this->redirect()->toUrl($this->actionBase);
     }
 }

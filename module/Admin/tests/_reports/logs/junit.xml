@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Skel Test Suite" tests="27" assertions="69" failures="1" errors="1" time="12.026725">
+    <testsuite name="AuthControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/AuthControllerTest.php" tests="5" assertions="15" failures="0" errors="0" time="2.195313">
+      <testcase name="test404" class="AuthControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/AuthControllerTest.php" line="29" assertions="1" time="0.445041"/>
+      <testcase name="testIndexActionLoginForm" class="AuthControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/AuthControllerTest.php" line="37" assertions="8" time="0.412594"/>
+      <testcase name="testLoginInvalidMethod" class="AuthControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/AuthControllerTest.php" line="72" assertions="2" time="0.447118"/>
+      <testcase name="testLogin" class="AuthControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/AuthControllerTest.php" line="81" assertions="2" time="0.433892"/>
+      <testcase name="testLogout" class="AuthControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/AuthControllerTest.php" line="101" assertions="2" time="0.456668"/>
+    </testsuite>
+    <testsuite name="IndexControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/IndexControllerTest.php" tests="7" assertions="20" failures="1" errors="0" time="2.877559">
+      <testcase name="test404" class="IndexControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/IndexControllerTest.php" line="31" assertions="1" time="0.386882"/>
+      <testcase name="testSaveActionNewRequest" class="IndexControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/IndexControllerTest.php" line="43" assertions="5" time="0.377930"/>
+      <testcase name="testSaveActionUpdateFormRequest" class="IndexControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/IndexControllerTest.php" line="69" assertions="6" time="0.425332"/>
+      <testcase name="testSaveActionPostRequest" class="IndexControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/IndexControllerTest.php" line="103" assertions="1" time="0.389408">
+        <failure type="PHPUnit_Framework_ExpectationFailedException">IndexControllerTest::testSaveActionPostRequest
+Failed asserting that 200 matches expected 302.
+
+/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/IndexControllerTest.php:118
+</failure>
+      </testcase>
+      <testcase name="testSaveActionInvalidPostRequest" class="IndexControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/IndexControllerTest.php" line="131" assertions="3" time="0.429112"/>
+      <testcase name="testInvalidDeleteAction" class="IndexControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/IndexControllerTest.php" line="162" assertions="2" time="0.412401"/>
+      <testcase name="testDeleteAction" class="IndexControllerTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Controller/IndexControllerTest.php" line="177" assertions="2" time="0.456494"/>
+    </testsuite>
+    <testsuite name="Admin\Model\UserTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Model/UserTest.php" tests="8" assertions="20" failures="0" errors="0" time="3.720495">
+      <testcase name="testGetInputFilter" class="Admin\Model\UserTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Model/UserTest.php" line="13" assertions="1" time="0.668290"/>
+      <testcase name="testInputFilterValid" class="Admin\Model\UserTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Model/UserTest.php" line="25" assertions="7" time="0.401070"/>
+      <testcase name="testInputFilterInvalidoUsername" class="Admin\Model\UserTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Model/UserTest.php" line="41" assertions="1" time="0.400990"/>
+      <testcase name="testInputFilterInvalidoRole" class="Admin\Model\UserTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Model/UserTest.php" line="54" assertions="1" time="0.401139"/>
+      <testcase name="testInsert" class="Admin\Model\UserTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Model/UserTest.php" line="67" assertions="2" time="0.456757"/>
+      <testcase name="testInsertInvalido" class="Admin\Model\UserTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Model/UserTest.php" line="81" assertions="2" time="0.392211"/>
+      <testcase name="testUpdate" class="Admin\Model\UserTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Model/UserTest.php" line="90" assertions="3" time="0.533828"/>
+      <testcase name="testDelete" class="Admin\Model\UserTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Model/UserTest.php" line="113" assertions="3" time="0.466209"/>
+    </testsuite>
+    <testsuite name="Application\Service\AuthTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Service/AuthTest.php" tests="7" assertions="14" failures="0" errors="1" time="3.233359">
+      <testcase name="testAuthenticateWithoutParams" class="Application\Service\AuthTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Service/AuthTest.php" line="28" assertions="1" time="0.411329"/>
+      <testcase name="testAuthenticateEmptyParams" class="Application\Service\AuthTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Service/AuthTest.php" line="41" assertions="2" time="0.369807"/>
+      <testcase name="testAuthenticateInvalidParameters" class="Application\Service\AuthTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Service/AuthTest.php" line="54" assertions="2" time="0.389799"/>
+      <testcase name="testAuthenticateInvalidPassord" class="Application\Service\AuthTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Service/AuthTest.php" line="67" assertions="2" time="0.734312"/>
+      <testcase name="testAuthenticateValidParams" class="Application\Service\AuthTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Service/AuthTest.php" line="79" assertions="3" time="0.557112"/>
+      <testcase name="testLogout" class="Application\Service\AuthTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Service/AuthTest.php" line="115" assertions="4" time="0.400907"/>
+      <testcase name="testAuthorize" class="Application\Service\AuthTest" file="/var/www/zf2napratica/module/Admin/tests/src/Admin/Service/AuthTest.php" line="155" assertions="0" time="0.370093">
+        <error type="PHPUnit_Framework_Error_Warning">Application\Service\AuthTest::testAuthorize
+Missing argument 1 for Admin\Service\Auth::authorize(), called in /var/www/zf2napratica/module/Admin/tests/src/Admin/Service/AuthTest.php on line 159 and defined
+
+/var/www/zf2napratica/module/Admin/src/Admin/Service/Auth.php:88
+/var/www/zf2napratica/module/Admin/tests/src/Admin/Service/AuthTest.php:159
+</error>
+      </testcase>
+    </testsuite>
+  </testsuite>
+</testsuites>
