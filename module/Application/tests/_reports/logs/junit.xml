@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Skel Test Suite" tests="18" assertions="53" failures="0" errors="0" time="6.570195">
+    <testsuite name="IndexControllerTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Controller/IndexControllerTest.php" tests="3" assertions="14" failures="0" errors="0" time="1.844794">
+      <testcase name="test404" class="IndexControllerTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Controller/IndexControllerTest.php" line="31" assertions="1" time="0.331463"/>
+      <testcase name="testIndexAction" class="IndexControllerTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Controller/IndexControllerTest.php" line="57" assertions="5" time="0.356297"/>
+      <testcase name="testIndexActionPaginator" class="IndexControllerTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Controller/IndexControllerTest.php" line="88" assertions="8" time="1.157034"/>
+    </testsuite>
+    <testsuite name="Application\Model\CommentTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/CommentTest.php" tests="8" assertions="22" failures="0" errors="0" time="2.680459">
+      <testcase name="testGetInputFilter" class="Application\Model\CommentTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/CommentTest.php" line="14" assertions="1" time="0.279375"/>
+      <testcase name="testInputFilterValid" class="Application\Model\CommentTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/CommentTest.php" line="26" assertions="8" time="0.255284"/>
+      <testcase name="testInputFilterInvalido" class="Application\Model\CommentTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/CommentTest.php" line="43" assertions="2" time="0.267075"/>
+      <testcase name="testInsert" class="Application\Model\CommentTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/CommentTest.php" line="53" assertions="2" time="0.366890"/>
+      <testcase name="testInsertInvalido" class="Application\Model\CommentTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/CommentTest.php" line="68" assertions="1" time="0.322191"/>
+      <testcase name="testUpdate" class="Application\Model\CommentTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/CommentTest.php" line="77" assertions="3" time="0.422149"/>
+      <testcase name="testUpdateInvalido" class="Application\Model\CommentTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/CommentTest.php" line="102" assertions="2" time="0.389089"/>
+      <testcase name="testDelete" class="Application\Model\CommentTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/CommentTest.php" line="119" assertions="3" time="0.378406"/>
+    </testsuite>
+    <testsuite name="Application\Model\PostTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/PostTest.php" tests="7" assertions="17" failures="0" errors="0" time="2.044943">
+      <testcase name="testGetInputFilter" class="Application\Model\PostTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/PostTest.php" line="13" assertions="1" time="0.266934"/>
+      <testcase name="testInputFilterValid" class="Application\Model\PostTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/PostTest.php" line="25" assertions="5" time="0.255493"/>
+      <testcase name="testInputFilterInvalido" class="Application\Model\PostTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/PostTest.php" line="39" assertions="1" time="0.289515"/>
+      <testcase name="testInsert" class="Application\Model\PostTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/PostTest.php" line="52" assertions="2" time="0.322226"/>
+      <testcase name="testInsertInvalido" class="Application\Model\PostTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/PostTest.php" line="68" assertions="2" time="0.255274"/>
+      <testcase name="testUpdate" class="Application\Model\PostTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/PostTest.php" line="77" assertions="3" time="0.322611"/>
+      <testcase name="testDelete" class="Application\Model\PostTest" file="/var/www/zf2napratica/module/Application/tests/src/Application/Model/PostTest.php" line="101" assertions="3" time="0.332890"/>
+    </testsuite>
+  </testsuite>
+</testsuites>

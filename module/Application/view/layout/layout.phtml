@@ -17,12 +17,16 @@
                         ->prependStylesheet($this->basePath('css/bootstrap.min.css')) ?>
 
         <!-- Scripts -->
-        <?php echo $this->headScript()
-            ->prependFile($this->basePath('js/bootstrap.min.js'))
-            ->prependFile($this->basePath('js/jquery.min.js'))
-            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
-        ; ?>
+        <?php
+            echo $this->inlineScript()
+                    ->prependFile($this->basePath('/js/bootbox.min.js'))
+                    ->prependFile($this->basePath('js/bootstrap.min.js'))
+                    ->prependFile($this->basePath('js/jquery.min.js'))
+                    ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+                    ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+                    ->prependFile($this->basePath('js/utils/routes.js'))
+                    ->prependFile($this->basePath('js/utils/utils.js'))
+        ?>
 
     </head>
     <body>
@@ -40,6 +44,19 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
                     </ul>
+                    <?php if (empty($this->session()->offsetGet('user'))) : ?>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                          <a href="/admin/auth/index">Entrar</a>
+                        </li>
+                    </ul>
+                    <?php else : ?>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                          <a href="/admin/auth/logout">Sair</a>
+                        </li>
+                    </ul>
+                    <?php endif; ?>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
