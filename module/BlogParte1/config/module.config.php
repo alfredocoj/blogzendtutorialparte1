@@ -9,8 +9,8 @@ namespace BlogParte1;
      ),
      'service_manager' => array(
         'invokables' => array(
-            'BlogParte1\Model\PostModel'             => 'BlogParte1\Model\PostModel',
-            'BlogParte1\Model\CommentModel'          => 'BlogParte1\Model\CommentModel',
+            /*'BlogParte1\Model\PostModel'             => 'BlogParte1\Model\PostModel',
+            'BlogParte1\Model\CommentModel'          => 'BlogParte1\Model\CommentModel',*/
         )
      ),
      'controllers' => array(

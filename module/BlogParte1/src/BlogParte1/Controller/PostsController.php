@@ -2,7 +2,6 @@
 
 namespace BlogParte1\Controller;
 
-//use Zend\Mvc\Controller\AbstractActionController;
 use Core\Controller\ActionController;
 use Zend\View\Model\ViewModel;
 use Core\Util\Constantes;
@@ -11,35 +10,42 @@ use BlogParte1\Form\PostForm;
 
 class PostsController extends ActionController
 {
+    /**
+     * Mostra os posts cadastrados
+     * @return void
+     */
     public function indexAction()
     {
+
         $posts = $this->getEntityManager()
                       ->getRepository('BlogParte1\Entity\Post')
                       ->findAll();
-        //$posts = $this->getService(Constantes::MODEL_POSTS)->findAll();
 
-        return new ViewModel([
-                'posts'    => $posts,
-            ]);
+        return new ViewModel(array(
+            'posts' => $posts
+        ));
     }
-
+     
+    /**
+     * Cria um post
+     * @return void
+     */
     public function createAction()
     {
-        $request = $this->getRequest();
         $form = new PostForm();
-
-        if ( $request->getPost() ) {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = new Post;
+            //$form->setInputFilter($post->getInputFilter());
             $form->setData($request->getPost());
-
-            if ($form->isValid()){
-                $post = new Post();
-                $post->exchangeArray($form->getData());
-
-                $repository = $this->getEntityManager();
-                $repository->persist($post);
-                $repository->flush();
-
-                return $this->redirect()->toUrl('/blogparte1/posts/index');
+            if ($form->isValid()) {
+                $data = $form->getData();
+                unset($data['submit']);
+                $data['post_date'] = date('Y-m-d H:i:s');
+                $post->setData($data);
+                
+                $saved =  $this->getTable('Application\Model\Post')->save($post);
+                return $this->redirect()->toUrl('/');
             }
         }
 
@@ -48,6 +54,10 @@ class PostsController extends ActionController
         ]);
     }
 
+    /**
+     * Edita um post
+     * @return void
+     */
     public function updateAction()
     {
         $id = (int) $this->params()->fromRoute('id');
@@ -59,21 +69,21 @@ class PostsController extends ActionController
         if($id){
             $post = $this->getEntityManager()->find('BlogParte1\Entity\Post', $id);
             $form->setData($post->getArrayCopy());
+            $form->get('submit')->setAttribute('value', 'Edit');
         }
 
-        elseif ( $request->isPost() ) {
+        if ($request->isPost()) {
+            $post = new Post;
+            //$form->setInputFilter($post->getInputFilter());
             $form->setData($request->getPost());
-
-            if ($form->isValid()){
-                $post = new Post();
-                $post->exchangeArray($form->getData());
-
-                $repository = $this->getEntityManager();
-                $update = $repository->find('BlogParte1\Entity\Post', $post->getId());
-                $update->exchangeArray($post->getArrayCopy());
-                $repository->flush();
-
-                return $this->redirect()->toUrl('/blogparte1/posts/index');
+            if ($form->isValid()) {
+                $data = $form->getData();
+                unset($data['submit']);
+                $data['post_date'] = date('Y-m-d H:i:s');
+                $post->setData($data);
+                
+                $saved =  $this->getTable('Application\Model\Post')->save($post);
+                return $this->redirect()->toUrl('/');
             }
         }
 
@@ -82,22 +92,18 @@ class PostsController extends ActionController
         ]);
     }
 
+    /**
+     * Exclui um post
+     * @return void
+     */
     public function deleteAction()
     {
-        $id = (int) $this->params()->fromRoute('id');
-
-        // try get method
-        if ( $id ) {
-            $repository = $this->getEntityManager();
-
-            $delete = $repository->find('BlogParte1\Entity\Post', $id);
-          try{
-              $repository->remove($delete);
-              $repository->flush();
-          } catch(Exception $e){
-              echo $e->getMessage();
-          }
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if ($id == 0) {
+            throw new \Exception("Código obrigatório");
         }
-        return $this->redirect()->toUrl('/blogparte1/posts/index');
+        
+        $this->getTable('Application\Model\Post')->delete($id);
+        return $this->redirect()->toUrl('/');
     }
 }

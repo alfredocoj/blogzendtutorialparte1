@@ -1,6 +1,7 @@
 <?php
 
 namespace BlogParte1\Entity;
+use Core\Entity\Entity;
 use Doctrine\ORM\Mapping as ORM; //Classe necessária para as anotações do Doctrine.
 
 /**
@@ -8,8 +9,7 @@ use Doctrine\ORM\Mapping as ORM; //Classe necessária para as anotações do Doc
  * @ORM\Entity
  * @ORM\Table(name="posts")
 */
-
-class Post
+class Post extends Entity
 {
 
 	/*Relacionando os atributos da tabela com os atributos da classe.*/
