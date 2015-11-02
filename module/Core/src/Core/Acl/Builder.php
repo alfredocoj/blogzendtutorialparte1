@@ -53,9 +53,9 @@ class Builder implements ServiceManagerAwareInterface
             foreach ($privilege['allow'] as $p) {
                 $acl->allow($role, $p);
             }
-            foreach ($privilege['deny'] as $p) {
+            /*foreach ($privilege['deny'] as $p) {
                 $acl->deny($role, $p);
-            }
+            }*/
         }
         return $acl;
     }

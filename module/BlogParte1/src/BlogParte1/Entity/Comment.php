@@ -1,6 +1,7 @@
 <?php
 
 namespace BlogParte1\Entity;
+use Core\Entity\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,8 +25,6 @@ class Comment
 	protected $id;
 
 	/**
-	 * Este campo é uma relação muitos-para-um. Na tabela "um", deve haver um atributo que
-	 * represente a relação.
 	 * @ORM\ManyToOne(targetEntity="Post", inversedBy="commentsPost")
 	 * @ORM\JoinColumn(name="posts_id", referencedColumnName="id")
 	*/
@@ -63,9 +62,9 @@ class Comment
         return $this->id;
     }
 
-    public function getPostId()
+    public function getPostsId()
     {
-        return $this->postId;
+        return $this->postsId;
     }
 
     public function getDescription()
@@ -100,9 +99,9 @@ class Comment
         $this->id = $id;
     }
 
-    public function setPostId($postId)
+    public function setPostsId($postsId)
     {
-        $this->postId = $postId;
+        $this->postsId = $postsId;
     }
 
     public function setDescription($description)
@@ -128,5 +127,29 @@ class Comment
     public function setCommentDate($commentDate)
     {
         $this->commentDate = $commentDate;
+    }
+
+    /**
+     * Carregando os valores passados pelo usuário no objeto a ser salvo no banco.
+     *
+     * @param  mixed $data Os dados recebidos do usuário.
+     * @return void
+     */
+    public function exchangeArray( array $values )
+    {
+
+       foreach( $this as $key => $value )
+            if( isset( $values[$key] ) )
+                $this->$key = $values[ $key ];
+    }
+
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
     }
 }

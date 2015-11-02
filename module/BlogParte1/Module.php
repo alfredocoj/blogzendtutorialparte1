@@ -6,6 +6,7 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 class Module implements ConfigProviderInterface, AutoloaderProviderInterface
 {
+
     // Obtem as configurações de rotas do módulo
     public function getConfig()
     {

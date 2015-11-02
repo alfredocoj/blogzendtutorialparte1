@@ -8,9 +8,12 @@ namespace BlogParte1;
          ),
      ),
      'service_manager' => array(
+        'factories' => array(
+            'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
+        ),
         'invokables' => array(
-            /*'BlogParte1\Model\PostModel'             => 'BlogParte1\Model\PostModel',
-            'BlogParte1\Model\CommentModel'          => 'BlogParte1\Model\CommentModel',*/
+            'BlogParte1\Model\PostModel'             => 'BlogParte1\Model\PostModel',
+            'BlogParte1\Model\CommentModel'          => 'BlogParte1\Model\CommentModel',
         )
      ),
      'controllers' => array(
@@ -37,6 +40,7 @@ namespace BlogParte1;
                           '__NAMESPACE__' => 'BlogParte1\Controller',
                          'controller'     => 'Posts',
                          'action'         => 'index',
+                         'module'     => 'BlogParte1',
                      )
                  ),
                 'may_terminate' => true,

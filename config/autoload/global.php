@@ -53,6 +53,12 @@ return array(
             'BlogParte1\Controller\Posts.create',
             'BlogParte1\Controller\Posts.update',
             'BlogParte1\Controller\Posts.delete',
+            'BlogParte1\Controller\Comments.index',
+            'BlogParte1\Controller\Comments.create',
+            'BlogParte1\Controller\Comments.create-index',
+            'BlogParte1\Controller\Comments.update',
+            'BlogParte1\Controller\Comments.delete',
+            'HelloWorld\Controller\Index.index',
         ),
         'privilege' => array(
             'visitante' => array(
@@ -65,6 +71,12 @@ return array(
                     'BlogParte1\Controller\Posts.create',
                     'BlogParte1\Controller\Posts.update',
                     'BlogParte1\Controller\Posts.delete',
+                    'BlogParte1\Controller\Comments.index',
+                    'BlogParte1\Controller\Comments.create',
+                    'BlogParte1\Controller\Comments.create-index',
+                    'BlogParte1\Controller\Comments.update',
+                    'BlogParte1\Controller\Comments.delete',
+                    'HelloWorld\Controller\Index.index',
                 )
             ),
             'redator' => array(

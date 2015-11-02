@@ -2,17 +2,12 @@
 
 namespace BlogParte1\Model;
 
-use Core\Model\BaseModel;
+use BlogParte1\Model\BaseModel;
+
+//use Core\Model\TableGateway;
 
 class PostModel extends BaseModel
 {
-
-    //Definimos nossa entity na model.
-    public function __construct()
-    {
-
-        $this->setEntity('BlogParte1\Entity\Post');
-    }
 
     /**
      * Retorna os posts em formato apropriado para campos select.

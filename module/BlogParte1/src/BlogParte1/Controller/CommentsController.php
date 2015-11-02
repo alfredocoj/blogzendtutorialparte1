@@ -1,37 +1,26 @@
 <?php
-namespace Admin\Controller;
+namespace BlogParte1\Controller;
 
 use Core\Controller\ActionController;
-use Core\Util\MenuBarButton;
-use Core\Util\Constantes;
 use Zend\View\Model\ViewModel;
-use Admin\Form\CommentForm;
-use Admin\Entity\Comment;
+use BlogParte1\Form\CommentForm;
+use BlogParte1\Entity\Comment;
 
 class CommentsController extends ActionController
 {
-
-    protected $menuBar = array();
 
     public function indexAction()
     {
         $id       = $this->params()->fromRoute('id');
 
-        $comments = empty($id) ? $this->getService(Constantes::MODEL_COMMENT)->findAll() :
-                        $this->getService(Constantes::MODEL_COMMENT)->getByAttributes(['postsId' => $id]);
-
-        $novo = new MenuBarButton();
-
-        $action = empty($id) ? '/admin/comments/create' : '/admin/comments/create-index/' . $id;
-        $novo->setName('Novo')
-             ->setAction($action)
-             ->setIcon('glyphicon glyphicon-plus')
-             ->setStyle('btn-success');
-
-        array_push($this->menuBar, $novo);
+        $comments = !isset($id) ? $this->getEntityManager()
+                                      ->getRepository('BlogParte1\Entity\Comment')
+                                      ->findAll() :
+                                 $this->getEntityManager()
+                                      ->getRepository('BlogParte1\Entity\Comment')
+                                      ->findBy(['postsId' => $id]);
 
         return new ViewModel([
-                'menuButtons' => $this->menuBar,
                 'comments'    => $comments,
             ]);
 
@@ -48,89 +37,68 @@ class CommentsController extends ActionController
             if ($form->isValid()) {
                 $comment = new Comment();
                 $comment->exchangeArray($form->getData());
-                $post    = $this->getService(Constantes::MODEL_POST)->getById($comment->postsId);
-                $comment->postsId = $post;
+                $post    = $this->getEntityManager()->find('BlogParte1\Entity\Post', $comment->getPostsId());
+                $comment->setPostsId($post);
 
-                $this->getService(Constantes::MODEL_COMMENT)->save($comment);
-                $this->flashMessenger()->setNamespace('success')->addMessage('Comentário salvo com sucesso!');
-                return $this->redirect()->toUrl('/admin/comments/index');
+                $repository = $this->getEntityManager();
+                $repository->persist($comment);
+                $repository->flush();
+
+                return $this->redirect()->toUrl('/blogparte1/comments/index');
             } else {
-                $this->flashMessenger()->setNamespace('danger')->addMessage('Dados inválidos.');
-                return $this->redirect()->toUrl('/admin/comments/create');
+                return $this->redirect()->toUrl('/blogparte1/comments/create');
             }
 
         }
 
-        $form->get('postsId')->setValueOptions($this->getService(Constantes::MODEL_POST)->getPostsSelect());
+        $form->get('postsId')
+             ->setValueOptions( 
+                    $this->getService('BlogParte1\Model\PostModel')
+                         ->getPostsToPopuleSelect() 
+                );
         return new ViewModel([
                 'form' => $form,
-            ]);
-    }
-
-    public function createIndexAction()
-    {
-
-        $id = $this->params()->fromRoute('id');
-        $form    = new CommentForm();
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
-
-            if ($form->isValid()) {
-                $comment = new Comment();
-                $comment->exchangeArray($form->getData());
-                $post    = $this->getService(Constantes::MODEL_POST)->getById($comment->postsId);
-                $comment->postsId = $post;
-
-                $this->getService(Constantes::MODEL_COMMENT)->save($comment);
-                $this->flashMessenger()->setNamespace('success')->addMessage('Comentário salvo com sucesso!');
-                return $this->redirect()->toUrl("/admin/comments/index/{$id}");
-            } else {
-                $this->flashMessenger()->setNamespace('danger')->addMessage('Dados inválidos.');
-                return $this->redirect()->toUrl('/admin/comments/create');
-            }
-
-        }
-
-        $form->get('postsId')->setValueOptions($this->getService(Constantes::MODEL_POST)->getPostsSelect());
-        return new ViewModel([
-                'form' => $form,
-                'postId' => $id,
             ]);
     }
 
     public function updateAction()
     {
         $commentId   = $this->params()->fromRoute('id');
-        $commentPost = $this->getService(Constantes::MODEL_COMMENT)->getById($commentId);
+        
+        $form    = new CommentForm();
+        $form->setAttribute('action', '/blogparte1/comments/update');
+        $request = $this->getRequest();
 
-        if (empty($commentPost)) {
-            $this->flashMessenger->setNamespace('danger')->addMessage('Não existe um comentário com esse código!');
-            return $this->redirect()->toUrl('/admin/comments/index');
+        if($commentId){
+            $commentPost = $this->getEntityManager()
+                            ->find('BlogParte1\Entity\Comment', $commentId);
+            if (empty($commentPost)) {
+                return $this->redirect()->toUrl('/blogparte1/comments/index');
+            }
+            $form->get('postsId')->setValueOptions($this->getService('BlogParte1\Model\PostModel')
+                             ->getPostsToPopuleSelect());
+
+            $form->setData($commentPost->getArrayCopy());
         }
 
-        $form    = new CommentForm();
-        $request = $this->getRequest();
-        $form->get('postsId')->setAttribute('data-id', $commentPost->postsId->id);
-        $form->get('postsId')->setValueOptions($this->getService(Constantes::MODEL_POST)->getPostsSelect());
-        $form->setData($commentPost->getArrayCopy());
-        
-
-        if ($request->isPost()) {
+        elseif ($request->isPost()) {
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
                 $comment = new Comment();
                 $comment->exchangeArray($form->getData());
-                $comment->postsId = $this->getService(Constantes::MODEL_POST)->getById($comment->postsId);
+                $comment->setPostsId( $this->getEntityManager()
+                                           ->find('BlogParte1\Entity\Post', $comment->getPostsId()) 
+                                );
 
-                $this->getService(Constantes::MODEL_COMMENT)->update($comment, 'id');
-                $this->flashMessenger()->setNamespace('success')->addMessage('Comentário atualizado com sucesso!');
-                return $this->redirect()->toUrl('/admin/comments/index');
+                $repository = $this->getEntityManager();
+                $update = $repository->find('BlogParte1\Entity\Comment', $comment->getId());
+                $update->exchangeArray($comment->getArrayCopy());
+                $repository->flush();
+
+                return $this->redirect()->toUrl('/blogparte1/comments/index');
             } else {
-                $this->flashMessenger()->setNamespace('danger')->addMessage('Comentário não atualizado: dados inválidos.');
-                return $this->redirect()->toUrl('/admin/comments/index');
+                return $this->redirect()->toUrl('/blogparte1/comments/index');
             }
 
         }
@@ -145,23 +113,22 @@ class CommentsController extends ActionController
         $id = $this->params()->fromRoute('id');
 
         if ($id) {
-            $comment = $this->getService(Constantes::MODEL_COMMENT)->getById($id);
+
+            $comment = $this->getEntityManager()
+                 ->find('BlogParte1\Entity\Comment', $id);
             if (empty($comment)) {
-                $this->flashMessenger()->setNamespace('danger')->addMessage('Você não tem permissão para excluir comentários.');
-                return $this->redirect()->toUrl('/admin/comments/index');
+                return $this->redirect()->toUrl('/blogparte1/comments/index');
             }
 
-            try {
-                $this->getService(Constantes::MODEL_COMMENT)->delete($id);
-                $this->flashMessenger()->setNamespace('success')->addMessage('Exclusão realizada com sucesso.');
-                return $this->redirect()->toUrl('/admin/comments/index');
-            } catch (DBALException $e) {
-                $this->flashMessenger()->setNamespace('danger')->addMessage('Exclusão não realizada.');
-                return $this->redirect()->toUrl('/admin/comments/index');
-            }
+            $repository = $this->getEntityManager();
+
+            $comment = $repository->find('BlogParte1\Entity\Comment', $id);
+            $repository->remove($comment);
+            $repository->flush();
+
+            return $this->redirect()->toUrl('/blogparte1/comments/index');
+            
         }
-
-        $this->flashMessenger()->setNamespace('danger')->addMessage('Acesso ilegal.');
-        return $this->redirect()->toUrl('/admin/index');
+        return $this->redirect()->toUrl('/blogparte1/index');
     }
 }

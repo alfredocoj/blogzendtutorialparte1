@@ -5,9 +5,13 @@
 			echo $this->form()->openTag($form);
             echo $this->formHidden($form->get('id'));
             echo $this->formHidden($form->get('postDate'));
-            echo $this->elementToRow($form->get('title'));
-            echo $this->elementToRow($form->get('description'));
-            echo $this->elementToSubmit($form->get('submit'));
+            echo "<div class='form-group'>";
+                echo $this->formInput($form->get('title'));
+            echo "</div>";
+            echo "<div class='form-group'>";
+                echo $this->formInput($form->get('description'));
+            echo "</div>";
+            echo $this->formSubmit($form->get('submit'));
         	echo $this->form()->closeTag();
         ?>
 	</div>

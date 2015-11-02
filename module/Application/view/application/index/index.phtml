@@ -1,10 +1,4 @@
-<div class="row">
-  <div class="btns">
-    <a class="btn btn-primary submit" href="/admin/posts/save" title="Criar Post"><i class="icon-plus-sign icon-white"></i> Criar Post</a>
-  </div>
-</div>
-
-<h2>Posts</h2>
+<h2>Blog</h2>
 <hr>
 
 
@@ -13,31 +7,17 @@
         <table class="table table-hover table-condensed">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Título</th>
                     <th>Conteúdo</th>
                     <th>Última atualização</th>
-                    <th style="width:27px;">Editar</th>
-                    <th style="width:27px;">Excluir</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($posts as $key => $value) : ?>
                 <tr>
-                    <td><a href='/admin/comments/index/<?php echo $value['id']; ?>' class="go-to-comments"><?php echo $value['id']; ?></a></td>
                     <td><?php echo ($value['title']); ?></td>
                     <td><?php echo ($value['description']); ?></td>
                     <td><?php echo ($value['post_date']); ?></td>
-                    <td class="text-center">
-                        <a class="btn btn-warning btn-xs" href="/admin/posts/save/<?php echo $value['id']; ?>">
-                            <i class='glyphicon glyphicon-pencil'></i>
-                        </a>
-                    </td>
-                    <td class="text-center">
-                        <a class="btn btn-danger btn-xs" href="/admin/posts/delete/<?php echo $value['id']; ?>">
-                            <i class='glyphicon glyphicon-trash'></i>
-                        </a>
-                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

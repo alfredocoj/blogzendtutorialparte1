@@ -33,25 +33,28 @@ class PostsController extends ActionController
     public function createAction()
     {
         $form = new PostForm();
+     
         $request = $this->getRequest();
+
         if ($request->isPost()) {
-            $post = new Post;
-            //$form->setInputFilter($post->getInputFilter());
+            $post = new Post();
+            
             $form->setData($request->getPost());
+
             if ($form->isValid()) {
-                $data = $form->getData();
-                unset($data['submit']);
-                $data['post_date'] = date('Y-m-d H:i:s');
-                $post->setData($data);
-                
-                $saved =  $this->getTable('Application\Model\Post')->save($post);
-                return $this->redirect()->toUrl('/');
+                $post->exchangeArray($form->getData());
+
+                $repository = $this->getEntityManager();
+                $repository->persist($post);
+                $repository->flush();
+
+                return $this->redirect()->toUrl('/blogparte1/posts/index');
             }
         }
 
-        return new ViewModel([
-          'form' => $form
-        ]);
+        return new ViewModel(array(
+            'form' => $form
+        ));
     }
 
     /**
@@ -66,30 +69,35 @@ class PostsController extends ActionController
         $form = new PostForm();
         $form->setAttribute('action', '/blogparte1/posts/update');
 
-        if($id){
+        // try get method
+        if ( $id ) {
             $post = $this->getEntityManager()->find('BlogParte1\Entity\Post', $id);
-            $form->setData($post->getArrayCopy());
-            $form->get('submit')->setAttribute('value', 'Edit');
-        }
 
-        if ($request->isPost()) {
-            $post = new Post;
-            //$form->setInputFilter($post->getInputFilter());
+            if (!empty($post))
+                $form->setData($post->getArrayCopy());
+        }
+        // try post method
+        else if ($request->isPost()) {
+            $post = new Post();
+
             $form->setData($request->getPost());
-            if ($form->isValid()) {
-                $data = $form->getData();
-                unset($data['submit']);
-                $data['post_date'] = date('Y-m-d H:i:s');
-                $post->setData($data);
-                
-                $saved =  $this->getTable('Application\Model\Post')->save($post);
-                return $this->redirect()->toUrl('/');
+
+            if ($form->isValid())
+            {
+                $post->exchangeArray($form->getData());
+
+                $repository = $this->getEntityManager();
+                $update = $repository->find('BlogParte1\Entity\Post', $post->getId());
+                $update->exchangeArray($post->getArrayCopy());
+                $repository->flush();
+
+                return $this->redirect()->toUrl('/blogparte1/posts/index');
             }
         }
 
-        return new ViewModel([
-          'form' => $form
-        ]);
+        return new ViewModel(array(
+            'form' => $form
+        ));
     }
 
     /**
@@ -98,12 +106,23 @@ class PostsController extends ActionController
      */
     public function deleteAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 0);
-        if ($id == 0) {
-            throw new \Exception("Código obrigatório");
+        $id = (int) $this->params()->fromRoute('id');
+
+        $repository = $this->getEntityManager();
+
+        $post = $repository->find('BlogParte1\Entity\Post', $id);
+
+        if(!empty($post)){
+           try {
+                $repository->remove($post);
+                $repository->flush();
+           } catch (Exception $e) {
+              error_log($e->getMessage());
+           }
+        } else {
+           error_log("Você está tentando deletar um post que não existe.");
         }
         
-        $this->getTable('Application\Model\Post')->delete($id);
-        return $this->redirect()->toUrl('/');
+        return $this->redirect()->toUrl('/blogparte1/posts/index');
     }
 }
