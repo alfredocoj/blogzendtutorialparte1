@@ -17,7 +17,7 @@ return array(
             'orm_default' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
-                    'host'     => 'localhost',
+                    'host'     => '10.0.0.15',
                     'port'     => '3306',
                     'user'     => '',
                     'password' => '',
@@ -29,12 +29,12 @@ return array(
     ),
     'db' => array(
        'driver'         => 'Pdo',
-       'dsn'            => 'mysql:dbname=zf2blog;host=localhost',
+       'dsn'            => 'mysql:dbname=pde;host=10.0.0.15',
        'driver_options' => array(
         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
-        'username' => 'root',
-        'password' => '1234',
+        'username' => 'bsc',
+        'password' => 'bsc.12qwaszx',
     ),
     'acl' => array(
         'roles' => array(
@@ -49,13 +49,17 @@ return array(
             'Admin\Controller\Auth.logout',
             'Admin\Controller\Posts.save',
             'Admin\Controller\Posts.delete',
+            'Admin\Controller\Posts.index',
+            'Admin\Controller\Comments.index',
+            'Admin\Controller\Comments.create',
+            'Admin\Controller\Comments.update',
+            'Admin\Controller\Comments.delete',
             'BlogParte1\Controller\Posts.index',
             'BlogParte1\Controller\Posts.create',
             'BlogParte1\Controller\Posts.update',
             'BlogParte1\Controller\Posts.delete',
             'BlogParte1\Controller\Comments.index',
             'BlogParte1\Controller\Comments.create',
-            'BlogParte1\Controller\Comments.create-index',
             'BlogParte1\Controller\Comments.update',
             'BlogParte1\Controller\Comments.delete',
             'HelloWorld\Controller\Index.index',
@@ -73,7 +77,6 @@ return array(
                     'BlogParte1\Controller\Posts.delete',
                     'BlogParte1\Controller\Comments.index',
                     'BlogParte1\Controller\Comments.create',
-                    'BlogParte1\Controller\Comments.create-index',
                     'BlogParte1\Controller\Comments.update',
                     'BlogParte1\Controller\Comments.delete',
                     'HelloWorld\Controller\Index.index',
@@ -88,6 +91,12 @@ return array(
                 'allow' => array(
                     'Admin\Controller\Posts.save',
                     'Admin\Controller\Posts.delete',
+                    'Admin\Controller\Posts.index',
+                    'Admin\Controller\Posts.delete',
+                    'Admin\Controller\Comments.index',
+                    'Admin\Controller\Comments.create',
+                    'Admin\Controller\Comments.update',
+                    'Admin\Controller\Comments.delete',
                 )
             ),
         )
