@@ -3,7 +3,7 @@ namespace Admin\Controller;
 
 use Zend\View\Model\ViewModel;
 use Core\Controller\ActionController;
-use Application\Entity\Post;
+use Admin\Entity\Post;
 use Admin\Form\PostForm as PostForm;
 
 /**
@@ -14,6 +14,18 @@ use Admin\Form\PostForm as PostForm;
  */
 class PostsController extends ActionController
 {
+
+    /**
+     * Mostra os posts cadastrados
+     * @return void
+     */
+    public function indexAction()
+    {
+        return new ViewModel(array(
+            'posts' => $this->getTable('Application\Entity\Post')->fetchAll()->toArray()
+        ));
+    }
+
     /**
      * Cria ou edita um post
      * @return void
