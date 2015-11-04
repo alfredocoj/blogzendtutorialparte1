@@ -2,60 +2,43 @@
 
 namespace Admin\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * Users Table.
- *
- * @ORM\Entity(repositoryClass="Admin\Entity\Usuario")
- * @ORM\Entity
- * @ORM\Table(name="seg_usuarios")
- * @property int    $usrId
- * @property string $usrNome
- * @property string $usrEmail
- * @property string $usrUsuario
- * @property string $usrSenha
- * @property string $usrTelefone
- * @property bool   $usrAtivo
- */
 class Usuario
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="usr_id", type="integer")
+     /**
+     * Nome da tabela. Campo obrigatório
+     * @var string
      */
-    protected $usrId;
+    protected $tableName ='users';
 
     /**
-     * @ORM\Column(name="usr_nome", type="string")
+     * @var int
      */
-    protected $usrNome;
+    protected $id;
 
     /**
-     * @ORM\Column(name="usr_email", type="string")
+     * @var string
      */
-    protected $usrEmail;
+    protected $username;
 
     /**
-     * @ORM\Column(name="usr_telefone", type="string")
+     * @var string
      */
-    protected $usrTelefone;
+    protected $password;
 
     /**
-     * @ORM\Column(name="usr_usuario", type="string")
+     * @var string
      */
-    protected $usrUsuario;
+    protected $name;
 
     /**
-     * @ORM\Column(name="usr_senha", type="string")
+     * @var int
      */
-    protected $usrSenha;
+    protected $valid;
 
     /**
-     * @ORM\Column(name="usr_ativo", type="boolean", columnDefinition="TINYINT DEFAULT 1 NOT NULL")
+     * @var string
      */
-    protected $usrAtivo;
+    protected $role;
 
     /**
      * Magic getter to expose protected properties.
@@ -87,17 +70,6 @@ class Usuario
     public function getArrayCopy()
     {
         return get_object_vars($this);
-    }
-
-    /**
-     * Magic getter to expose protected properties.
-     *
-     * @param string $property
-     * @return mixed
-     */
-    public function getId()
-    {
-        return 'usrId';
     }
 
     /**
