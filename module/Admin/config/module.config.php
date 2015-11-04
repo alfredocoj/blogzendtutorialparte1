@@ -21,6 +21,7 @@ return array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'controller'    => 'Index',
                         'action'        => 'index',
+                        'module'        => 'Admin'
                     ),
                 ),
                 'may_terminate' => true,
@@ -34,6 +35,7 @@ return array(
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                             'defaults' => array(
+                                'module'        => 'Admin'
                             ),
                         ),
                         'child_routes' => array( //permite mandar dados pela url 
