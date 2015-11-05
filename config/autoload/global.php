@@ -17,7 +17,7 @@ return array(
             'orm_default' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
-                    'host'     => '10.0.0.15',
+                    'host'     => 'localhost',
                     'port'     => '3306',
                     'user'     => '',
                     'password' => '',
@@ -29,12 +29,10 @@ return array(
     ),
     'db' => array(
        'driver'         => 'Pdo',
-       'dsn'            => 'mysql:dbname=pde;host=10.0.0.15',
+       'dsn'            => 'mysql:dbname=zf2blog;host=localhost',
        'driver_options' => array(
         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
-        'username' => 'bsc',
-        'password' => 'bsc.12qwaszx',
     ),
     'acl' => array(
         'roles' => array(
@@ -51,9 +49,11 @@ return array(
             'Admin\Controller\Posts.delete',
             'Admin\Controller\Posts.index',
             'Admin\Controller\Comments.index',
-            'Admin\Controller\Comments.create',
-            'Admin\Controller\Comments.update',
+            'Admin\Controller\Comments.save',
             'Admin\Controller\Comments.delete',
+            'Admin\Controller\Users.index',
+            'Admin\Controller\Users.save',
+            'Admin\Controller\Users.delete',
             'BlogParte1\Controller\Posts.index',
             'BlogParte1\Controller\Posts.create',
             'BlogParte1\Controller\Posts.update',
@@ -92,11 +92,12 @@ return array(
                     'Admin\Controller\Posts.save',
                     'Admin\Controller\Posts.delete',
                     'Admin\Controller\Posts.index',
-                    'Admin\Controller\Posts.delete',
                     'Admin\Controller\Comments.index',
-                    'Admin\Controller\Comments.create',
-                    'Admin\Controller\Comments.update',
+                    'Admin\Controller\Comments.save',
                     'Admin\Controller\Comments.delete',
+                    'Admin\Controller\Users.index',
+                    'Admin\Controller\Users.save',
+                    'Admin\Controller\Users.delete',
                 )
             ),
         )

@@ -6,6 +6,12 @@ namespace Admin\Entity;
 class Post
 {
 
+    /**
+     * Nome da tabela. Campo obrigatório
+     * @var string
+     */
+    protected $tableName ='posts';
+
 	protected $id;
 
 
@@ -17,8 +23,12 @@ class Post
 
 	protected $postDate;
 
-
-	protected $commentsPost;
+    /**
+     * Primary Key field name
+     *
+     * @var string
+     */
+    protected $primaryKeyField = 'id';
 
 	/**
      * Magic getter to expose protected properties.
@@ -54,21 +64,31 @@ class Post
     }
 
     /**
-     * Carregando os valores passados pelo usuário no objeto a ser salvo no banco.
+     * Populate from an array.
      *
-     * @param  mixed $data Os dados recebidos do usuário.
-     * @return void
+     * @param array $data
      */
     public function exchangeArray( array $values )
     {
-
-       foreach( $this as $key => $value )
+        foreach( $this as $key => $value )
             if( isset( $values[$key] ) )
                 $this->$key = $values[ $key ];
     }
 
-    public function getId() {
-        return 'id';
+    /**
+     * Return all entity data in array format
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        $data = get_object_vars($this);
+        unset($data['tableName']);
+        return array_filter($data);
     }
 
+     public function getTableName()
+    {
+        return $this->tableName;
+    }
 }

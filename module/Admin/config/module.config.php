@@ -4,9 +4,11 @@
 return array(
     'controllers' => array( //add module controllers
         'invokables' => array(
-            'Admin\Controller\Index' => 'Admin\Controller\IndexController',
-            'Admin\Controller\Auth' => 'Admin\Controller\AuthController',
-            'Admin\Controller\Posts' => 'Admin\Controller\PostsController',
+            'Admin\Controller\Index'    => 'Admin\Controller\IndexController',
+            'Admin\Controller\Auth'     => 'Admin\Controller\AuthController',
+            'Admin\Controller\Posts'    => 'Admin\Controller\PostsController',
+            'Admin\Controller\Comments' => 'Admin\Controller\CommentsController',
+            'Admin\Controller\Users'    => 'Admin\Controller\UsersController',
 
         ),
     ),

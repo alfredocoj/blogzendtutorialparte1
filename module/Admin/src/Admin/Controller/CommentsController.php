@@ -3,26 +3,26 @@ namespace Admin\Controller;
 
 use Zend\View\Model\ViewModel;
 use Core\Controller\ActionController;
-use Admin\Entity\Post;
-use Admin\Form\PostForm as PostForm;
+use Admin\Entity\Comment;
+use Admin\Form\CommentForm as CommentForm;
 
 /**
  * Controlador que gerencia os posts
- * 
+ *
  * @category Admin
  * @package Controller
  */
-class PostsController extends ActionController
+class CommentsController extends ActionController
 {
 
     /**
-     * Mostra os posts cadastrados
+     * Mostra os comments cadastrados
      * @return void
      */
     public function indexAction()
     {
         return new ViewModel(array(
-            'posts' => $this->getTable('Application\Entity\Post')->fetchAll()->toArray()
+            'comments' => $this->getTable('Admin\Entity\Comment')->fetchAll()->toArray()
         ));
     }
 
@@ -32,33 +32,37 @@ class PostsController extends ActionController
      */
     public function saveAction()
     {
-        $form = new PostForm();
+        $form = new CommentForm();
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $post = new Post;
-            //$form->setInputFilter($post->getInputFilter());
+            $comment = new Comment;
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                //unset($data['submit']);
-                $data['post_date'] = date('Y-m-d H:i:s');
-                $post->exchangeArray($data);
-                
-                $saved =  $this->getTable('Application\Entity\Post')->save($post);
-                return $this->redirect()->toUrl('/admin/posts/index');
+                $data['commentDate'] = date('Y-m-d H:i:s');
+                $comment->exchangeArray($data);
+
+                $saved =  $this->getTable('Admin\Entity\Post')->save($comment);
+                return $this->redirect()->toUrl('/admin/comments/index');
             }
         }
         $id = (int) $this->params()->fromRoute('id', 0);
         if ($id > 0) {
-            $post = $this->getTable('Application\Entity\Post')->get($id);
-            $form->bind($post);
+            $comment = $this->getTable('Admin\Entity\Comment')->get($id);
+            echo "<pre>"; var_dump($comment); exit;
+            $form->bind($comment);
             $form->get('submit')->setAttribute('value', 'Edit');
         }
+            $form->get('postsId')
+             ->setValueOptions(
+                    $this->getService('Admin\Model\PostModel')
+                         ->getPostsToPopuleSelect()
+                );
         return new ViewModel(
             array('form' => $form)
         );
     }
-     
+
     /**
      * Exclui um post
      * @return void
@@ -68,9 +72,9 @@ class PostsController extends ActionController
         $id = (int) $this->params()->fromRoute('id', 0);
         if ($id == 0)
             throw new \Exception("Código obrigatório");
-        
-        $this->getTable('Application\Entity\Post')->delete($id);
-        return $this->redirect()->toUrl('/admin/posts/index');
+
+        $this->getTable('Admin\Entity\Comment')->delete($id);
+        return $this->redirect()->toUrl('/admin/comments/index');
     }
 
 }

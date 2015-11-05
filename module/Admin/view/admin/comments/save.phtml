@@ -1,0 +1,40 @@
+<h2>Criar/Editar um comentário</h2>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<?php
+			echo $this->form()->openTag($form);
+            echo $this->formHidden($form->get('id'));
+            echo "<div class='form-group'>";
+            echo $this->formSelect($form->get('postsId'));
+            echo "</div>";
+            echo "<div class='form-group'>";
+            echo $this->formInput($form->get('description'));
+            echo "</div>";
+            echo "<div class='form-group'>";
+            echo $this->formInput($form->get('name'));
+            echo "</div>";
+            echo "<div class='form-group'>";
+            echo $this->formInput($form->get('email'));
+            echo "</div>";
+            echo "<div class='form-group'>";
+            echo $this->formInput($form->get('webpage'));
+            echo "</div>";
+            echo $this->formSubmit($form->get('submit'));
+            echo $this->formHidden($form->get('commentDate'));
+        	echo $this->form()->closeTag();
+        ?>
+	</div>
+</div>
+
+<script>
+    $(function() {
+        var dt = new Date();
+        var dtstring = dt.getFullYear()
+            + '-' + (dt.getMonth()+1)
+            + '-' + dt.getDate()
+            + ' ' + dt.getHours()
+            + ':' + dt.getMinutes()
+            + ':' + dt.getSeconds();
+        $('input[name="commentDate"]').val(dtstring);
+    });
+</script>

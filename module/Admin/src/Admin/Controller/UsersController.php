@@ -11,14 +11,14 @@ use Admin\Entity\Usuario;
 
 use stdClass;
 
-class UsuariosController extends ActionController
+class UsersController extends ActionController
 {
 
     public function indexAction()
     {
         return new ViewModel(
             array(
-                'usuarios'    => $this->getTable('Application\Entity\Usuario')->fetchAll()->toArray()
+                'users'    => $this->getTable('Admin\Entity\Usuario')->fetchAll()->toArray()
             )
         );
     }
@@ -36,16 +36,15 @@ class UsuariosController extends ActionController
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                unset($data['submit']);
-                $usuario->setData($data);
-
-                $saved =  $this->getTable('Application\Entity\Usuario')->save($usuario);
-                return $this->redirect()->toUrl('/admin/usuario/index');
+                $data['password'] = md5($data['password']);
+                $usuario->exchangeArray($data);
+                $saved =  $this->getTable('Admin\Entity\Usuario')->save($usuario);
+                return $this->redirect()->toUrl('/admin/users/index');
             }
         }
         $id = (int) $this->params()->fromRoute('id', 0);
         if ($id > 0) {
-            $usuario = $this->getTable('Application\Entity\Usuario')->get($id);
+            $usuario = $this->getTable('Admin\Entity\Usuario')->get($id);
             $form->bind($usuario);
             $form->get('submit')->setAttribute('value', 'Edit');
         }
@@ -65,7 +64,7 @@ class UsuariosController extends ActionController
             throw new \Exception("Código obrigatório");
         }
 
-        $this->getTable('Application\Entity\Usuario')->delete($id);
-        return $this->redirect()->toUrl('/admin/usuario/index');
+        $this->getTable('Admin\Entity\Usuario')->delete($id);
+        return $this->redirect()->toUrl('/admin/users/index');
     }
 }

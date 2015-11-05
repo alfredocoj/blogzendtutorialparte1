@@ -1,0 +1,50 @@
+<h2>Comentários</h2>
+<div class="span12 alert alert-normal">
+    <a class="btn btn-small btn-success" href="/admin/comments/save">
+        <i class="glyphicon glyphicon-plus"></i>
+        Novo
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Post</th>
+                    <th>Comentário</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Web-page</th>
+                    <th>Última atualização</th>
+                    <th style="width:27px;">Editar</th>
+                    <th style="width:27px;">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($comments as $key => $value) : ?>
+                <tr>
+                    <td><?php echo $value['id']; ?></td>
+                    <td><?php echo $value['postsId']; ?></td>
+                    <td><?php echo $value['description']; ?></td>
+                    <td><?php echo $value['name']; ?></td>
+                    <td><?php echo $value['email']; ?></td>
+                    <td><?php echo $value['webpage']; ?></td>
+                    <td><?php echo $value['commentDate']; ?></td>
+                    <td class="text-center">
+                        <a class='btn btn-warning btn-xs' href='/admin/comments/save/<?php echo $value['id']; ?>'>
+                            <i class='glyphicon glyphicon-pencil'></i>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a class='btn btn-danger btn-xs' href='/admin/comments/delete/<?php echo $value['id']; ?>'>
+                            <i class='glyphicon glyphicon-trash'></i>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

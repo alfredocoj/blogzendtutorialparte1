@@ -13,7 +13,7 @@ class Usuario
     /**
      * @var int
      */
-    protected $id;
+    protected $usr_id;
 
     /**
      * @var string
@@ -39,6 +39,13 @@ class Usuario
      * @var string
      */
     protected $role;
+
+    /**
+     * Primary Key field name
+     *
+     * @var string
+     */
+    protected $primaryKeyField = 'usr_id';
 
     /**
      * Magic getter to expose protected properties.
@@ -82,5 +89,37 @@ class Usuario
         foreach( $this as $key => $value )
             if( isset( $values[$key] ) )
                 $this->$key = $values[ $key ];
+    }
+
+    /**
+     * Set all entity data based in an array with data
+     *
+     * @param array $data
+     * @return void
+     */
+    public function setData($data)
+    {
+        foreach($data as $key => $value) {
+            $this->__set($key, $value);
+        }
+    }
+
+    /**
+     * Return all entity data in array format
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        $data = get_object_vars($this);
+        unset($data['inputFilter']);
+        unset($data['tableName']);
+        unset($data['primaryKeyField']);
+        return array_filter($data);
+    }
+
+    public function getTableName()
+    {
+        return $this->tableName;
     }
 }

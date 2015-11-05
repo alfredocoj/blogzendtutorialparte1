@@ -22,21 +22,15 @@ class UsuarioForm extends Form
     {
         $this->setAttributes(array('method' => 'post',
                                    'class'  => 'form-horizontal',
-                                   'action' => '/admin/usuarios/create'
+                                   'action' => '/admin/users/save'
                                   ));
 
-        $id = new Element\Hidden('id');
+        $usrId = new Element\Hidden('usr_id');
 
         $name = new Element\Text('name');
         $name->setName('name')
                  ->setAttribute('placeholder', 'Nome do usuário')
                  ->setLabel('Nome do usuário')
-                 ->setLabelAttributes(array('class'=>'col-sm-2 control-label'));
-
-        $usrEmail = new Element\Email('usrEmail');
-        $usrEmail->setName('usrEmail')
-                 ->setAttribute('placeholder', 'Email')
-                 ->setLabel('Email')
                  ->setLabelAttributes(array('class'=>'col-sm-2 control-label'));
 
         $username = new Element\Text('username');
@@ -70,7 +64,7 @@ class UsuarioForm extends Form
         $submit->setAttribute('value', 'Salvar')
                ->setAttribute('class', 'btn btn-primary');
 
-        $this->add($id)
+        $this->add($usrId)
              ->add($name)
              ->add($username)
              ->add($password)
@@ -85,7 +79,7 @@ class UsuarioForm extends Form
         $factory     = new InputFactory();
 
         $inputFilter->add($factory->createInput(array(
-            'name'     => 'id',
+            'name'     => 'usr_id',
             'required' => true,
             'filters'  => array(
                 array('name' => 'Int'),
