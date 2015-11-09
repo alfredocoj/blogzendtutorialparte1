@@ -3,7 +3,12 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php $router = explode("\\", $this->controllerName());
+        if ( $router[0] == "Admin" )
+            echo $this->headTitle('Blog - Administração')->setSeparator(' - ')->setAutoEscape(false);
+        else
+            echo $this->headTitle('ZF2 '. $this->translate('Blog - Curso ZF2'))->setSeparator(' - ')->setAutoEscape(false);
+        ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -44,6 +49,11 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
                     </ul>
+                    <?php if (!empty($this->session()->offsetGet('user'))) : ?>
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="/admin/index/index">Admin</a></li>
+                        </ul>
+                    <?php endif; ?>
                     <?php if (empty($this->session()->offsetGet('user'))) : ?>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
@@ -61,12 +71,75 @@
             </div>
         </nav>
         <div class="container">
-            <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
-            </footer>
+            <?php if ( $router[0] == "Admin" ) : ?>
+            <div class="row">
+                <div class="col-sm-3 col-md-2 sidebar">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#Dashboard" aria-expanded="true" class=""><span></span>Dashboard</a>
+                                    </h4>
+                                </div>
+                                <div id="Dashboard" class="panel-collapse in">
+                                    <ul class="list-group">
+                                        <li class="list-group-item active">
+                                            <a href="/admin/index/index">
+                                                Resumo
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#Cadastros" aria-expanded="false" class="collapsed"><span></span>Cadastros</a>
+                                    </h4>
+                                </div>
+                                <div id="Cadastros" class="panel-collapse collapse">
+                                    <ul class="list-group">
+                                        <?php if (!empty($this->session()->offsetGet('user')->role != 'redator')) : ?>
+                                        <li class="list-group-item">
+                                            <a href="/admin/users/index">
+                                                Usuários
+                                            </a>
+                                        </li>
+                                        <?php endif;?>
+                                        <li class="list-group-item">
+                                            <a href="/admin/posts/index">
+                                                Posts
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="/admin/comments/index">
+                                                Comentários
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /col-sm-3 -->
+                <div class="col-sm-9 main">
+                    <?php echo $this->content; ?>
+                </div><!-- /col-sm-9 -->
+            </div> <!-- /row -->
+            <?php else : ?>
+                <?php echo $this->content; ?>
+            <?php endif; ?>
         </div> <!-- /container -->
+        <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+            <div class="container">
+                <div class="navbar-text pull-left">
+                    <footer>
+                        <p>&copy; <?php echo date('Y') ?> Curso de ZF2. <?php echo $this->translate('All rights reserved.') ?></p>
+                    </footer>
+                </div>
+            </div>
+        </div><!-- /navbar-inverse -->
         <?php echo $this->inlineScript() ?>
     </body>
 </html>

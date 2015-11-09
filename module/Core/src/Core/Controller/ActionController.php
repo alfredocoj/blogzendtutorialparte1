@@ -27,6 +27,7 @@ class ActionController extends AbstractActionController
         return $tableGateway;
     }
 
+    // Obs.: Método referentes ao Doctrine
     /**
      * Returns a Service
      *
@@ -38,6 +39,7 @@ class ActionController extends AbstractActionController
         return $this->getServiceLocator()->get($service);
     }
 
+    // Obs.: Método referentes ao Doctrine
     /**
      * Returns a Service referente ao mapeamento ORM do Doctrine
      *

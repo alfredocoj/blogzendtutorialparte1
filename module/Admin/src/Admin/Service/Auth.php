@@ -88,7 +88,18 @@ class Auth extends Service
 
         return false;
     }
-    
+    /**
+     * Retorna o tipo de permissão do usuário logado
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->getServiceManager()
+                    ->get('Session')
+                    ->offsetGet('user')
+                    ->role;
+    }
  /**
  * Faz a autorização do usuário para acessar o recurso
  * @param string $moduleName Nome do módulo sendo acessado
@@ -105,7 +116,7 @@ public function authorize($moduleName, $controllerName, $actionName)
         $user = $session->offsetGet('user');
         $role = $user->role;
     }
-    
+
     $resource = $controllerName . '.' . $actionName;
     $acl = $this->getServiceManager()->get('Core\Acl\Builder')->build();
     if ($acl->isAllowed($role, $resource)) {

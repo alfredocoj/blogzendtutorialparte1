@@ -27,14 +27,4 @@ class Session extends AbstractHelper implements ServiceLocatorAwareInterface
 
         return $serviceManager->get('Session');
     }
-
-    public function isLogged()
-    {
-        $user = $this->offsetGet('user');
-        if ( !empty($user) ) {
-            return true;
-        }
-
-        return false;
-    }
 }

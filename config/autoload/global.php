@@ -54,6 +54,7 @@ return array(
             'Admin\Controller\Users.index',
             'Admin\Controller\Users.save',
             'Admin\Controller\Users.delete',
+            'Admin\Controller\Index.index',
             'BlogParte1\Controller\Posts.index',
             'BlogParte1\Controller\Posts.create',
             'BlogParte1\Controller\Posts.update',
@@ -85,6 +86,8 @@ return array(
             'redator' => array(
                 'allow' => array(
                     'Admin\Controller\Posts.save',
+                    'Admin\Controller\Posts.index',
+                    'Admin\Controller\Index.index',
                 )
             ),
             'admin' => array(

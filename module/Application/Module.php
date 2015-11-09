@@ -9,6 +9,7 @@
 
 namespace Application;
 
+use Core\View\Helper\ControllerName;
 use Zend\Mvc\ModuleRouteListener;
 
 class Module
@@ -16,6 +17,11 @@ class Module
     public function onBootstrap($e)
     {
         $e->getApplication()->getServiceManager()->get('translator');
+        // Get controller name into layout/views
+        $e->getApplication()->getServiceManager()->get('viewhelpermanager')->setFactory('controllerName', function($sm) use ($e) {
+            $viewHelper = new ControllerName($e->getRouteMatch());
+            return $viewHelper;
+        });
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
