@@ -9,6 +9,7 @@ use Doctrine\DBAL\DriverManager;
 class BaseModel  implements ServiceLocatorAwareInterface
 {
 	 protected $services;
+     protected $entityManager;
 
     protected function getDbalConnection()
     {
@@ -39,5 +40,19 @@ class BaseModel  implements ServiceLocatorAwareInterface
     protected function getService($service)
     {
         return $this->get($service);
+    }
+
+    protected function getEntityManager()
+    {
+        if (null === $this->entityManager) {
+            $this->entityManager = $this->getService('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->entityManager;
+    }
+
+    protected function setEntityManager($entityManager)
+    {
+        $this->entityManager = $entityManager;
     }
 }

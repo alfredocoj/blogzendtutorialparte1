@@ -2,10 +2,13 @@
 
 namespace BlogParte1\Model;
 
-use Core\Model\TableGateway;
-
-class PostModel extends TableGateway
+class PostModel extends BaseModel
 {
+
+    function __construct()
+    {
+        $this->entityManager = "BlogParte1\Entity\Post";
+    }
 
     /**
      * Retorna os posts em formato apropriado para campos select.
@@ -15,7 +18,7 @@ class PostModel extends TableGateway
      */
     public function getPostsToPopuleSelect()
     {
-
+        $repository = $this->getDbalConnection();
         $sql = "SELECT
                     id as id,
                     title as title
@@ -23,8 +26,7 @@ class PostModel extends TableGateway
                     posts
                 ORDER BY
                     post_date";
-        $posts = $this->executeSelect($sql);
-        echo "<pre>";var_dump($posts);exit;
+        $posts = $repository->executeQuery($sql)->fetchAll(\PDO::FETCH_CLASS);
 
         foreach ($posts as $key => $value) {
             $retorno[$value->id] = $value->title;
