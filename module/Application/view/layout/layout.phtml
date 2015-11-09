@@ -115,11 +115,13 @@
                                                 Posts
                                             </a>
                                         </li>
+                                        <?php if (!empty($this->session()->offsetGet('user')->role != 'redator')) : ?>
                                         <li class="list-group-item">
                                             <a href="/admin/comments/index">
                                                 Comentários
                                             </a>
                                         </li>
+                                        <?php endif;?>
                                     </ul>
                                 </div>
                             </div>
