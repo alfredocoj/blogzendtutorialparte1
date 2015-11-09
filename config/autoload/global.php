@@ -12,21 +12,6 @@
  */
 
 return array(
-    'doctrine' => array(
-        'connection' => array(
-            'orm_default' => array(
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'params' => array(
-                    'host'     => 'localhost',
-                    'port'     => '3306',
-                    'user'     => '',
-                    'password' => '',
-                    'dbname'   => '',
-                    'driver' => 'pdo_mysql',
-                )
-            )
-        ),
-    ),
     'db' => array(
        'driver'         => 'Pdo',
        'dsn'            => 'mysql:dbname=zf2blog;host=localhost',
@@ -36,9 +21,9 @@ return array(
     ),
     'acl' => array(
         'roles' => array(
-            'visitante'   => null,
-            'redator'  => 'visitante',
-            'admin' => 'redator'
+            'visitante'     => null,
+            'redator'       => 'visitante',
+            'admin'         => 'redator'
         ),
         'resources' => array(
             'Application\Controller\Index.index',
