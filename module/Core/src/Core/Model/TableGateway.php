@@ -79,8 +79,13 @@ class TableGateway extends AbstractTableGateway
         } else {
             if (! $this->get($id)) 
                 throw new EntityException('Id não existe');
-            if ($this->update($data, array($this->primaryKeyField => $id)) < 1)
-                throw new EntityException("Erro ao atualizar", 1);
+            if ($this->update($data, array($this->primaryKeyField => $id)) < 1){
+                try {
+                    throw new EntityException("Erro ao atualizar", 1);
+                    } catch(EntityException $e) {
+                        echo $e->getMessage();
+                    }
+            }
         }
         return $object;
     }
