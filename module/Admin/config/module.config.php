@@ -75,9 +75,21 @@ return array(
                 $dbAdapter = $sm->get('DbAdapter');
                 return new Admin\Service\Auth($dbAdapter);
             },
-        )
+        ),
+        'invokables' => array(
+            'Admin\Model\PostModel'             => 'Admin\Model\PostModel'
+        ),
     ),
     'view_helpers' => array(
+        'factories' => array(
+            'flashMessage' => function ($serviceManager) {
+                $flashmessenger = $serviceManager->getServiceLocator()->get('ControllerPluginManager')->get('flashmessenger');
+                $message = new \Core\View\Helper\FlashMessages();
+                $message->setFlashMessenger( $flashmessenger );
+
+                return $message;
+            }
+        ),
         'invokables'=> array(
             'session' => 'Core\View\Helper\Session',
         ),
