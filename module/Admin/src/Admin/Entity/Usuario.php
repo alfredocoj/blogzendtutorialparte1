@@ -112,7 +112,6 @@ class Usuario
     public function getData()
     {
         $data = get_object_vars($this);
-        unset($data['inputFilter']);
         unset($data['tableName']);
         unset($data['primaryKeyField']);
         return array_filter($data);
