@@ -129,6 +129,10 @@
                     </div>
                 </div><!-- /col-sm-3 -->
                 <div class="col-sm-9 main">
+                    <?php
+                    $message = $this->flashMessage();
+                    echo strlen($message) > 0 ? $message : '';
+                    ?>
                     <?php echo $this->content; ?>
                 </div><!-- /col-sm-9 -->
             </div> <!-- /row -->
