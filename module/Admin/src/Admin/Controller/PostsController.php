@@ -36,14 +36,14 @@ class PostsController extends ActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = new Post;
-            //$form->setInputFilter($post->getInputFilter());
             $form->setData($request->getPost());
+
             if ($form->isValid()) {
                 $data = $form->getData();
-                //unset($data['submit']);
+
                 $data['post_date'] = date('Y-m-d H:i:s');
                 $post->exchangeArray($data);
-                
+
                 $saved =  $this->getTable('Application\Entity\Post')->save($post);
                 if($saved)
                     $this->flashMessenger()->setNamespace('success')
