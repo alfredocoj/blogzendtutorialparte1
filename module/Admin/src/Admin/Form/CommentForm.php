@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Form;
+use Zend\Form\ElementInterface;
 use Zend\Form\Form;
 use Zend\Form\Element;
 use Zend\InputFilter\InputFilter;
@@ -17,7 +18,7 @@ class CommentForm extends Form
         $this->setUseInputFilterDefaults(false); //Corrige erro do select.
 		$this->setAttribute('method', 'post');
         $this->setAttribute('class','form-horizontal');
-        $this->setAttribute('action', '/blogparte1/comments/create');
+        $this->setAttribute('action', '/admin/comments/save');
 
         $this->addElements();
        	$this->addInputFilter();
@@ -27,12 +28,12 @@ class CommentForm extends Form
 	public function addElements()
     {
         $id          = new Element\Hidden('id');
-        $postsId     = new Element\Select('postsId');
+        $postsId     = new Element\Select('posts_id');
         $description = new Element\Text('description');
         $name        = new Element\Text('name');
         $email       = new Element\Email('email');
         $webpage     = new Element\Text('webpage');
-        $commentDate = new Element\Hidden('commentDate');
+        $commentDate = new Element\Hidden('comment_date');
         $submit      = new Element\Submit('submit');
 
         $description->setName('description')
@@ -40,7 +41,7 @@ class CommentForm extends Form
                     ->setLabel('Comentário')
                     ->setLabelAttributes(array('class'=>'col-sm-2 control-label'));
 
-        $postsId->setName('postsId')
+        $postsId->setName('posts_id')
                  ->setLabel('Post')
                  ->setLabelAttributes(array('class'=>'col-sm-2 control-label'))
                  ->setEmptyOption('Escolha um post');
@@ -88,7 +89,7 @@ class CommentForm extends Form
             )));
 
             $this->inputFilter->add($factory->createInput(array(
-                'name'     => 'postsId',
+                'name'     => 'posts_id',
                 'required' => true,
             )));
 
@@ -165,7 +166,7 @@ class CommentForm extends Form
             )));
 
             $this->inputFilter->add($factory->createInput(array(
-                'name'     => 'commentDate',
+                'name'     => 'comment_date',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),

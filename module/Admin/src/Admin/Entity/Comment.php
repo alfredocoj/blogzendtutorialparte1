@@ -25,7 +25,7 @@ class Comment
      *
      * @var int
      */
-	protected $postsId;
+	protected $posts_id;
 
     /**
      *
@@ -55,7 +55,7 @@ class Comment
      *
      * @var string
     */
-	protected $commentDate;
+	protected $comment_date;
 
     /**
      * Primary Key field name
@@ -98,7 +98,10 @@ class Comment
 
        foreach( $this as $key => $value )
             if( isset( $values[$key] ) )
-                $this->$key = $values[ $key ];
+               /* if($key=="commentDate")
+                    $this->commentDate  = (isset($data['comment_date'])) ? $data['comment_date'] : null;
+                else*/
+                    $this->$key = $values[ $key ];
     }
 
     /**

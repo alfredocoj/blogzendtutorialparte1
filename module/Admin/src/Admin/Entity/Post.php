@@ -21,7 +21,7 @@ class Post
 	protected $description;
 
 
-	protected $postDate;
+	protected $post_date;
 
     /**
      * Primary Key field name
@@ -84,6 +84,7 @@ class Post
     {
         $data = get_object_vars($this);
         unset($data['tableName']);
+        unset($data['primaryKeyField']);
         return array_filter($data);
     }
 

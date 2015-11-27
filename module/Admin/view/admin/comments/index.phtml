@@ -26,12 +26,12 @@
                 <?php foreach ($comments as $key => $value) : ?>
                 <tr>
                     <td><?php echo $value['id']; ?></td>
-                    <td><?php echo $value['postsId']; ?></td>
+                    <td><?php echo $value['posts_id']; ?></td>
                     <td><?php echo $value['description']; ?></td>
                     <td><?php echo $value['name']; ?></td>
                     <td><?php echo $value['email']; ?></td>
                     <td><?php echo $value['webpage']; ?></td>
-                    <td><?php echo $value['commentDate']; ?></td>
+                    <td><?php echo $value['comment_date']; ?></td>
                     <td class="text-center">
                         <a class='btn btn-warning btn-xs' href='/admin/comments/save/<?php echo $value['id']; ?>'>
                             <i class='glyphicon glyphicon-pencil'></i>
