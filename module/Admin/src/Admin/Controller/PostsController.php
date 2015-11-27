@@ -45,8 +45,16 @@ class PostsController extends ActionController
                 $post->exchangeArray($data);
                 
                 $saved =  $this->getTable('Application\Entity\Post')->save($post);
+                if($saved)
+                    $this->flashMessenger()->setNamespace('success')
+                                       ->addMessage('Post salvo com sucesso.');
+                else
+                    $this->flashMessenger()->setNamespace('danger')
+                        ->addMessage('Não foi possível salver esse poste. Tente novamente mais tarde.');
                 return $this->redirect()->toUrl('/admin/posts/index');
-            }
+            } else
+                $this->flashMessenger()->setNamespace('danger')
+                                       ->addMessage('Post não foi salvo. Erro de validação.');
         }
         $id = (int) $this->params()->fromRoute('id', 0);
         if ($id > 0) {
@@ -69,7 +77,12 @@ class PostsController extends ActionController
         if ($id == 0)
             throw new \Exception("Código obrigatório");
         
-        $this->getTable('Application\Entity\Post')->delete($id);
+        if($this->getTable('Application\Entity\Post')->delete($id))
+            $this->flashMessenger()->setNamespace('success')
+                 ->addMessage('Post deletado com sucesso.');
+        else
+            $this->flashMessenger()->setNamespace('danger')
+                 ->addMessage('Não foi possível deletar esse registro. Tente novamente mais tarde.');
         return $this->redirect()->toUrl('/admin/posts/index');
     }
 

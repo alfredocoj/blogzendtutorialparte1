@@ -39,8 +39,17 @@ class UsersController extends ActionController
                 $data['password'] = md5($data['password']);
                 $usuario->exchangeArray($data);
                 $saved =  $this->getTable('Admin\Entity\Usuario')->save($usuario);
+                if($saved)
+                    $this->flashMessenger()->setNamespace('success')
+                                           ->addMessage('Usuário salvo com sucesso.');
+                else
+                    $this->flashMessenger()->setNamespace('danger')
+                                           ->addMessage('Não foi possível salver esse usuário.
+                                                        Tente novamente mais tarde.');
                 return $this->redirect()->toUrl('/admin/users/index');
-            }
+            } else
+                $this->flashMessenger()->setNamespace('danger')
+                                       ->addMessage('Não foi possível salver esse usuário. Erro de validação.');
         }
         $id = (int) $this->params()->fromRoute('id', 0);
         if ($id > 0) {
@@ -64,7 +73,12 @@ class UsersController extends ActionController
             throw new \Exception("Código obrigatório");
         }
 
-        $this->getTable('Admin\Entity\Usuario')->delete($id);
+        if($this->getTable('Admin\Entity\Usuario')->delete($id))
+            $this->flashMessenger()->setNamespace('success')
+                ->addMessage('Usuário deletado com sucesso.');
+        else
+            $this->flashMessenger()->setNamespace('danger')
+                ->addMessage('Não foi possível deletar esse registro. Tente novamente mais tarde.');
         return $this->redirect()->toUrl('/admin/users/index');
     }
 }

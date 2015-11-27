@@ -39,21 +39,29 @@ class CommentsController extends ActionController
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $data['commentDate'] = date('Y-m-d H:i:s');
+                $data['comment_date'] = date('Y-m-d H:i:s');
                 $comment->exchangeArray($data);
+                $saved =  $this->getTable('Admin\Entity\Comment')->save($comment);
+                if($saved)
+                    $this->flashMessenger()->setNamespace('success')
+                                           ->addMessage('Comentário salvo com sucesso.');
+                else
+                    $this->flashMessenger()->setNamespace('danger')
+                                           ->addMessage('Não foi possível salver esse comentário.
+                                                         Tente novamente mais tarde.');
 
-                $saved =  $this->getTable('Admin\Entity\Post')->save($comment);
                 return $this->redirect()->toUrl('/admin/comments/index');
-            }
+            } else
+                $this->flashMessenger()->setNamespace('danger')
+                                       ->addMessage('Post não foi salvo. Erro de validação.');
         }
         $id = (int) $this->params()->fromRoute('id', 0);
         if ($id > 0) {
             $comment = $this->getTable('Admin\Entity\Comment')->get($id);
-            echo "<pre>"; var_dump($comment); exit;
             $form->bind($comment);
             $form->get('submit')->setAttribute('value', 'Edit');
         }
-            $form->get('postsId')
+            $form->get('posts_id')
              ->setValueOptions(
                     $this->getService('Admin\Model\PostModel')
                          ->getPostsToPopuleSelect()
@@ -73,7 +81,15 @@ class CommentsController extends ActionController
         if ($id == 0)
             throw new \Exception("Código obrigatório");
 
-        $this->getTable('Admin\Entity\Comment')->delete($id);
+        if($this->getTable('Admin\Entity\Comment')->delete($id))
+            $this->flashMessenger()->setNamespace('success')
+                                   ->addMessage('Post foi deletado com sucesso.');
+        else
+            $this->flashMessenger()->setNamespace('error')
+                                   ->addMessage('Post não foi deletado. Houve algum
+                                                problema nesta requisição, tente novamente
+                                                mais tarde.');
+
         return $this->redirect()->toUrl('/admin/comments/index');
     }
 
