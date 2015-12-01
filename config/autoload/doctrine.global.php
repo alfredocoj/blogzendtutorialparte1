@@ -14,8 +14,7 @@ return array(
                     'port'     => '3306',
                     'user'     => '',
                     'password' => '',
-                    'dbname'   => '',
-                    'driver' => 'pdo_mysql',
+                    'dbname'   => ''
                 )
             )
         ),
