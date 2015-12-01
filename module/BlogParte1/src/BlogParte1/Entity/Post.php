@@ -2,7 +2,7 @@
 
 namespace BlogParte1\Entity;
 use Core\Entity\Entity;
-use Doctrine\ORM\Mapping as ORM; //Classe necessária para as anotações do Doctrine.
+use Doctrine\ORM\Mapping as ORM; //Classe que mapeia as anotações do Doctrine.
 
 /**
  * @ORM\Entity(repositoryClass="BlogParte1\Entity\Post")
