@@ -7,7 +7,7 @@ class PostModel extends BaseModel
 
     function __construct()
     {
-        $this->entityManager = "BlogParte1\Entity\Post";
+        $this->setEntity("BlogParte1\Entity\Post");
     }
 
     /**

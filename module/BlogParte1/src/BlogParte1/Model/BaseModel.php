@@ -10,6 +10,7 @@ class BaseModel  implements ServiceLocatorAwareInterface
 {
 	 protected $services;
      protected $entityManager;
+     protected $entity;
 
     protected function getDbalConnection()
     {
@@ -54,5 +55,12 @@ class BaseModel  implements ServiceLocatorAwareInterface
     protected function setEntityManager($entityManager)
     {
         $this->entityManager = $entityManager;
+    }
+
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+
+        return $this;
     }
 }
