@@ -2,9 +2,7 @@
 
 namespace BlogParte1\Controller;
 
-use Core\Controller\ActionController;
 use Zend\View\Model\ViewModel;
-use Core\Util\Constantes;
 use BlogParte1\Entity\Post;
 use BlogParte1\Form\PostForm;
 

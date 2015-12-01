@@ -1,7 +1,6 @@
 <?php
 namespace BlogParte1\Controller;
 
-use Core\Controller\ActionController;
 use Zend\View\Model\ViewModel;
 use BlogParte1\Form\CommentForm;
 use BlogParte1\Entity\Comment;
