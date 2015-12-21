@@ -27,13 +27,13 @@ namespace BlogParte1;
      'router' => array(
          // Open configuration for all possible routes
          'routes' => array(
-             // Define a new route called "post"
+             // Define a new route called "blogparte1"
              'blogparte1' => array(
                  // Define the routes type to be "Zend\Mvc\Router\Http\Literal", which is basically just a string
                  'type' => 'literal',
                  // Configure the route itself
                  'options' => array(
-                     // Listen to "/blog" as uri
+                     // Listen to "/blogparte1" as uri
                      'route'    => '/blogparte1',
                      // Define default controller and action to be called when this route is matched
                      'defaults' => array(
@@ -64,14 +64,17 @@ namespace BlogParte1;
              )
          )
      ),
-
+     // Para registrar suas entidades com o ORM, adicione o seguinte configurações de driver de metadados no seu módulo
+     // de configuração (intercalado) para cada um dos seus namespaces das entidades:
     'doctrine' => array(
         'driver' => array(
+            // Define um drive de anotação com um caminho, e o nomeia `BlogParte1_drive`
             __NAMESPACE__ . '_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
             ),
+                // Drive de metadados padrão, agrega todos os outros drives em um único.
                 'orm_default' => array(
                 'drivers' => array(
                     __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
